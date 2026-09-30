@@ -1,4 +1,18 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Frontend de check-in con lectura QR y consulta al backend local.
+
+El navegador envía el QR validado a `POST /api/checkin`. Next.js lo reenvía a
+`POST http://localhost:3001/api/v1/checkin/validaciones` desde el computador donde corre el frontend.
+Así el celular puede usar el enlace HTTPS del frontend sin acceder directamente al puerto 3001.
+
+Para cambiar la dirección del backend, define `BACKEND_URL=http://localhost:3001`
+en `.env.local` y reinicia Next.js. Esta variable se usa solo en el servidor.
+Mantén ambos procesos funcionando. El contrato actual no requiere autenticación.
+
+La consulta comprueba existencia y coincidencia de evento; no registra asistencia,
+no detecta usos previos y no comprueba anulaciones ni horarios.
+
+Pruebas (Node 22.19 o posterior):
+`node --experimental-strip-types --test tests/*.test.mjs`.
 
 ## Getting Started
 
