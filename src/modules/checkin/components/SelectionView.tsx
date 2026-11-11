@@ -1,13 +1,14 @@
 "use client";
 
-import { QrCode, KeyRound, Sparkles } from "./icons";
+import { QrCode, KeyRound, MoreHorizontal } from "./icons";
 
 interface SelectionProps {
   onSelectQR: () => void;
   onSelectCode?: () => void;
+  onSelectMore?: () => void;
 }
 
-export default function SelectionView({ onSelectQR, onSelectCode }: SelectionProps) {
+export default function SelectionView({ onSelectQR, onSelectCode, onSelectMore }: SelectionProps) {
   const containerStyle = {
     display: "flex",
     flexDirection: "column" as const,
@@ -60,12 +61,6 @@ export default function SelectionView({ onSelectQR, onSelectCode }: SelectionPro
     transition: "background-color 0.2s ease",
   };
 
-  const disabledButtonStyle = {
-    ...buttonStyle,
-    opacity: 0.4,
-    cursor: "not-allowed",
-  };
-
   return (
     <div style={containerStyle}>
       <div style={wrapperStyle}>
@@ -100,14 +95,16 @@ export default function SelectionView({ onSelectQR, onSelectCode }: SelectionPro
           <span>Ingreso por código secreto</span>
         </button>
 
-        {/* Opción 3: Extra aún no añadido */}
+        {/* Opción 3: 3 puntos */}
         <button
           type="button"
-          style={disabledButtonStyle}
-          disabled
+          style={buttonStyle}
+          onClick={onSelectMore}
+          aria-label="Más opciones"
+          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#24355D")}
+          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#2F4374")}
         >
-          <Sparkles size={18} color="#FFFFFF" />
-          <span>...</span>
+          <MoreHorizontal size={22} color="#FFFFFF" />
         </button>
       </div>
     </div>

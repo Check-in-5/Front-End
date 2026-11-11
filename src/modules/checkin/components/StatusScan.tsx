@@ -5,38 +5,14 @@ import { CheckCircle2, XCircle, AlertTriangle, RefreshCw, X, ChevronDown, Chevro
 import { ScanResultInfo } from "../types";
 
 interface StatusProps {
-  status: string | ScanResultInfo;
+  status: ScanResultInfo;
   onClose: () => void;
   onScanAgain?: () => void;
 }
 
 export default function StatusScan({ status, onClose, onScanAgain }: StatusProps) {
   const [showRaw, setShowRaw] = useState(false);
-
-  // Normalizar datos si status es string o ScanResultInfo
-  const result: ScanResultInfo = typeof status === "string" 
-    ? {
-        status: status === "accepted" ? "accepted" : "rejected",
-        rawContent: status === "accepted" 
-          ? '{"id_entrada":"TK-94821","id_evento":"EVT-2026-001","usuario":"Matías Calderón"}' 
-          : '{"id_entrada":"TK-00000","id_evento":"EVT-2026-001","error":"NO_REGISTRADO"}',
-        motivo: status === "accepted" ? "TICKET_FOUND" : "TICKET_NOT_FOUND",
-        mensaje: status === "accepted" 
-          ? "Acceso autorizado. Entrada registrada en el sistema." 
-          : "Acceso rechazado. Entrada inválida o duplicada.",
-        ticket: {
-          id_entrada: status === "accepted" ? "TK-94821" : "TK-00000",
-          id_evento: "EVT-2026-001",
-          nombre_evento: "Conferencia Anual de Tecnología 2026",
-          nombre_usuario: status === "accepted" ? "Matías Calderón" : "Desconocido",
-          direccion: "Auditorio Central, Campus Tecnológico",
-          hora_inicio: "09:30 hrs",
-          hora_cierre: "18:00 hrs",
-          fecha: new Date().toLocaleDateString("es-CL"),
-        },
-        timestamp: new Date().toLocaleTimeString("es-CL", { hour: "2-digit", minute: "2-digit", second: "2-digit" }),
-      }
-    : status;
+  const result = status;
 
   const isAccepted = result.status === "accepted";
   const isInvalid = result.status === "invalid";

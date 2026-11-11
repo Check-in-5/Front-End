@@ -1,17 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { ArrowLeft, Camera, RefreshCw, AlertCircle, CheckCircle2, XCircle } from "./icons";
+import { ArrowLeft, Camera, RefreshCw, AlertCircle } from "./icons";
 import { ScanResultInfo } from "../types";
 import { procesarLecturaQR } from "../api";
 
 interface ScannerProps {
   onBack: () => void;
   onScan: (result: ScanResultInfo) => void;
-  onSimulateScan?: (status: string) => void;
 }
 
-export default function ScannerView({ onBack, onScan, onSimulateScan }: ScannerProps) {
+export default function ScannerView({ onBack, onScan }: ScannerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const scanIntervalRef = useRef<number | null>(null);
@@ -155,35 +154,6 @@ export default function ScannerView({ onBack, onScan, onSimulateScan }: ScannerP
       stopCamera();
     };
   }, [attempt, handleDecodedQR, stopCamera]);
-
-  // Simulación de prueba rápida con semillas oficiales Grupo 5
-  const handleSimular = (tipo: "valido" | "invalido" | "demo2") => {
-    if (tipo === "valido") {
-      if (onSimulateScan) onSimulateScan("accepted");
-      handleDecodedQR(
-        JSON.stringify({
-          id_entrada: "tk-998877",
-          id_evento: "evt-77889",
-        })
-      );
-    } else if (tipo === "demo2") {
-      if (onSimulateScan) onSimulateScan("accepted");
-      handleDecodedQR(
-        JSON.stringify({
-          id_entrada: "tk-demo-001",
-          id_evento: "evt-002",
-        })
-      );
-    } else {
-      if (onSimulateScan) onSimulateScan("rejected");
-      handleDecodedQR(
-        JSON.stringify({
-          id_entrada: "tk-RECHAZADO-99",
-          id_evento: "evt-77889",
-        })
-      );
-    }
-  };
 
   return (
     <div
@@ -422,104 +392,6 @@ export default function ScannerView({ onBack, onScan, onSimulateScan }: ScannerP
         >
           Apunta la cámara al código QR de la entrada para leerlo automáticamente.
         </p>
-
-        {/* Opciones de prueba y alternativas */}
-        <div
-          style={{
-            backgroundColor: "#1F2937",
-            borderRadius: "10px",
-            padding: "16px",
-            border: "1px solid #374151",
-            display: "flex",
-            flexDirection: "column",
-            gap: "12px",
-          }}
-        >
-          <div style={{ fontSize: "12px", fontWeight: 700, color: "#9CA3AF", textTransform: "uppercase" }}>
-            Pruebas de escaneo rápido:
-          </div>
-
-          {/* Botones de prueba con QR real / semillas oficiales Grupo 5 */}
-          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-            <button
-              type="button"
-              disabled={isValidating}
-              onClick={() => handleSimular("valido")}
-              style={{
-                flex: 1,
-                minWidth: "130px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "6px",
-                backgroundColor: "#065F46",
-                color: "#E2F4EA",
-                border: "none",
-                borderRadius: "8px",
-                padding: "8px 12px",
-                fontSize: "12px",
-                fontWeight: 600,
-                cursor: isValidating ? "wait" : "pointer",
-                opacity: isValidating ? 0.7 : 1,
-              }}
-            >
-              <CheckCircle2 size={14} />
-              <span>{isValidating ? "Validando..." : "QR tk-998877"}</span>
-            </button>
-
-            <button
-              type="button"
-              disabled={isValidating}
-              onClick={() => handleSimular("demo2")}
-              style={{
-                flex: 1,
-                minWidth: "130px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "6px",
-                backgroundColor: "#1E429F",
-                color: "#E1EFFE",
-                border: "none",
-                borderRadius: "8px",
-                padding: "8px 12px",
-                fontSize: "12px",
-                fontWeight: 600,
-                cursor: isValidating ? "wait" : "pointer",
-                opacity: isValidating ? 0.7 : 1,
-              }}
-            >
-              <CheckCircle2 size={14} />
-              <span>QR tk-demo-001</span>
-            </button>
-
-            <button
-              type="button"
-              disabled={isValidating}
-              onClick={() => handleSimular("invalido")}
-              style={{
-                flex: 1,
-                minWidth: "120px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "6px",
-                backgroundColor: "#7F1D1D",
-                color: "#FDF0F2",
-                border: "none",
-                borderRadius: "8px",
-                padding: "8px 12px",
-                fontSize: "12px",
-                fontWeight: 600,
-                cursor: isValidating ? "wait" : "pointer",
-                opacity: isValidating ? 0.7 : 1,
-              }}
-            >
-              <XCircle size={14} />
-              <span>QR Rechazado</span>
-            </button>
-          </div>
-        </div>
       </div>
 
       {/* Estilo para animación de línea de escáner */}

@@ -66,9 +66,6 @@ export default function CheckinPlaceholder() {
         <ScannerView
           onBack={handleBackToSelection}
           onScan={handleScanSuccess}
-          onSimulateScan={(status) => {
-            console.log("Simulación recibida:", status);
-          }}
         />
       )}
 

@@ -181,11 +181,11 @@ export async function validarTicketCheckin(idEntrada: string, idEvento: string):
             id_entrada: data.ticket?.id_entrada || entradaLimpia,
             id_evento: data.ticket?.id_evento || eventoLimpio,
             nombre_usuario: data.ticket?.nombre_usuario || datosEntradas?.nombre_usuario || "Asistente Verificado",
-            nombre_evento: `Evento ${data.ticket?.id_evento || eventoLimpio}`,
+            nombre_evento: (data.ticket as any)?.nombre_evento || (datosEntradas as any)?.nombre_evento || `Evento ${data.ticket?.id_evento || eventoLimpio}`,
             fecha: new Date().toLocaleDateString("es-CL"),
             hora_inicio: "09:30 hrs",
             hora_cierre: "20:00 hrs",
-            direccion: "Sede Oficial del Evento",
+            direccion: (data.ticket as any)?.lugar_ingreso || (datosEntradas as any)?.lugar_ingreso || "Sede Oficial del Evento",
             tipo_entrada: datosEntradas?.usuario?.rol_usuario ? `Acceso (${datosEntradas.usuario.rol_usuario})` : "General",
           },
           motivo: data.motivo || "ACCESO_AUTORIZADO",
@@ -198,8 +198,8 @@ export async function validarTicketCheckin(idEntrada: string, idEvento: string):
           motivo === "TICKET_NOT_FOUND"
             ? "Acceso rechazado. El ticket no existe en el sistema o no está registrado."
             : motivo === "EVENT_MISMATCH"
-            ? "Acceso rechazado. El ticket no coincide con este evento."
-            : `Acceso denegado (${motivo}). Entrada no autorizada.`;
+              ? "Acceso rechazado. El ticket no coincide con este evento."
+              : `Acceso denegado (${motivo}). Entrada no autorizada.`;
 
         return {
           status: "rejected",
@@ -297,7 +297,6 @@ export async function procesarLecturaQR(raw: string): Promise<ScanResultInfo> {
     }
   }
 
-  // 4. Caso separador por dos puntos o barra: "tk-998877:evt-77889"
   if (!idEntrada && (rawClean.includes(":") || rawClean.includes("|"))) {
     const sep = rawClean.includes(":") ? ":" : "|";
     const [entradaPart, eventoPart] = rawClean.split(sep);
