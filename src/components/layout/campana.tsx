@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import NotificacionesPlaceholder from "@/modules/notificaciones/components/NotificacionesPlaceholder";
 
 export default function Campana() {
   const [abierto, establecer_abierto] = useState(false);
@@ -82,7 +81,29 @@ export default function Campana() {
           </svg>
         </span>
       </button>
-      {abierto && <NotificacionesPlaceholder />}
+      {abierto && (
+        <div
+          style={{
+            position: "absolute",
+            right: 24,
+            top: 64,
+            background: "#FFFFFF",
+            color: "#2F4374",
+            padding: "16px 20px",
+            borderRadius: "12px",
+            boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
+            fontSize: "14px",
+            fontFamily: "'Inter', sans-serif",
+            zIndex: 1001,
+            minWidth: "220px",
+          }}
+        >
+          <p style={{ margin: 0, fontWeight: 600 }}>Notificaciones</p>
+          <p style={{ margin: "6px 0 0 0", color: "#666", fontSize: "12px" }}>
+            No hay nuevas notificaciones.
+          </p>
+        </div>
+      )}
     </div>
   );
 }

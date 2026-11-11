@@ -1,8 +1,9 @@
 import React from 'react';
+import Link from 'next/link';
 
 export default function Logo() {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+    <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
       <svg 
         width="32" 
         height="32" 
@@ -33,6 +34,6 @@ export default function Logo() {
       }}>
         TICKET-U
       </div>
-    </div>
+    </Link>
   );
 }

@@ -9,6 +9,7 @@
 // Por ahora este es un placeholder funcional para que puedan probar
 // su propia página mientras se define el diseño final del header.
 
+import Link from "next/link";
 import Logo from "./logo";
 import SearchButton from "./boton_busqueda";
 import Campana from "./campana";
@@ -102,28 +103,24 @@ export default function Header() {
           <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
             <Logo />
             <nav className="nav-menu desktop-nav">
-              <span className="nav-item active">Inicio</span>
-              <span className="nav-item">Mis eventos</span>
-              <span className="nav-item">Promociones</span>
-              <span className="nav-item">Configuración</span>
-              <span className="nav-item">Mi cuenta</span>
+              <Link href="/" className="nav-item">Inicio</Link>
+              <Link href="/checkin" className="nav-item">Check-in</Link>
+              <Link href="/catalogo" className="nav-item">Catálogo</Link>
             </nav>
           </div>
           <div className="right-controls">
             <SearchButton />
             <Campana />
             <div className="avatar-wrapper">
-              <div className="avatar-circle">MC</div> 
+              <div className="avatar-circle">ST</div> 
             </div>
           </div>
         </div>
         <div className="mobile-scroll-container">
           <nav className="nav-menu">
-            <span className="nav-item active">Inicio</span>
-            <span className="nav-item">Mis eventos</span>
-            <span className="nav-item">Promociones</span>
-            <span className="nav-item">Configuración</span>
-            <span className="nav-item">Mi cuenta</span>
+            <Link href="/" className="nav-item">Inicio</Link>
+            <Link href="/checkin" className="nav-item">Check-in</Link>
+            <Link href="/catalogo" className="nav-item">Catálogo</Link>
           </nav>
         </div>
       </header>

@@ -34,3 +34,9 @@ Thumbs.db
 
 # TypeScript
 *.tsbuildinfo
+
+# Microservicios externos / locales
+backend-main/
+Entradass-main/
+arquitectura_ms_entradas_inventario-main/
+
