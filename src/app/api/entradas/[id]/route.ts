@@ -6,6 +6,9 @@ export async function GET(
 ) {
   const idLimpio = encodeURIComponent(params.id.trim());
   const targets = [
+    `http://entradas-service:3000/api/v1/entradas/${idLimpio}/detalle`,
+    `http://localhost:3003/api/v1/entradas/${idLimpio}/detalle`,
+    `http://127.0.0.1:3003/api/v1/entradas/${idLimpio}/detalle`,
     `http://localhost:3003/api/entradas/${idLimpio}`,
     `http://127.0.0.1:3003/api/entradas/${idLimpio}`,
     `http://entradas-service:3000/api/entradas/${idLimpio}`,
